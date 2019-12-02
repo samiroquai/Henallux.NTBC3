@@ -3,3 +3,20 @@
 ################################################################################
 
 /.vscode
+/AccesConcurrents_Start/.vs/WPFClient/v16
+/AccesConcurrents_Start/AccesConcurrentsNetCore/bin/Debug
+/AccesConcurrents_Start/AccesConcurrentsNetCore/obj
+/AccesConcurrents_Start/packages
+/AccesConcurrents_Start/tests/.vscode
+/AccesConcurrents_Start/tests/bin/Debug/netcoreapp2.1
+/AccesConcurrents_Start/tests/obj
+/AccesConcurrents_Start/webapi/bin/Debug/netcoreapp2.1
+/AccesConcurrents_Start/webapi/obj
+/AccesConcurrents_Start/WPF.NetCoreApp/bin/Debug/netcoreapp3.0
+/AccesConcurrents_Start/WPF.NetCoreApp/obj
+/AccesConcurrents_Start/WPFClient/bin/Debug
+/AccesConcurrents_Start/WPFClient/obj/Debug
+/LabAccConc/lib/bin/Debug/netcoreapp3.0
+/LabAccConc/lib/obj
+/LabAccConc/tests/bin/Debug/netcoreapp3.0
+/LabAccConc/tests/obj
