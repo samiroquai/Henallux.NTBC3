@@ -45,10 +45,44 @@ namespace tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DbUpdateConcurrencyException))]
+        public void DetecteLesEditionsConcurrentes()
+        {
+            using (CompanyContext contexteDeJohn = new CompanyContext(GetDbContextOptions()))
+            {
+                using (CompanyContext contexteDeSarah = new CompanyContext(GetDbContextOptions()))
+                {
+                    var clientDeJohn = contexteDeJohn.Customers.First();
+                    var clientDeSarah = contexteDeSarah.Customers.First();
+
+                    clientDeJohn.AccountBalance += 1000;
+                    contexteDeJohn.SaveChanges();
+
+                    clientDeSarah.AccountBalance += 2000;
+
+                    contexteDeSarah.SaveChanges();
+                }
+            }
+        }
+
+
+
+        [TestMethod]
         public async Task First_RetourneUnElement()
         {
+            //3A: ARRANGE => VOIR SETUP
+            // 1. définit contexte, instancie les objets qu'on va tester
+
+
             //Faire un FirstAsync a-t-il beaucoup d'intérêt niveau métier?
-            Customer client=await _context.Customers.FirstAsync();
+
+            //    ACT 
+            // 2. Invoque le code à tester
+            
+            Customer client =await _context.Customers.FirstAsync();
+
+            //    ASSERT
+            // 3. Vérifie le résultat, l'output du code testé
             Assert.AreEqual("5000", client.PostCode);
         }
 

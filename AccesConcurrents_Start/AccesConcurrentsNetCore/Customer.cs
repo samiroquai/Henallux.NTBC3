@@ -14,8 +14,9 @@ namespace AccesConcurrentsNetCore
         public long Id { get; set; }
         public string Name { get; set; }
         public string PostCode { get; set; }
-        public string Remark { get; set; }        
+        public string Remark { get; set; }
 
-
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }
