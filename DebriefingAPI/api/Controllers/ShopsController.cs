@@ -1,4 +1,5 @@
 ﻿using DDDDemo.Dal;
+using DDDDemo.DTO;
 using DDDDemo.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -24,16 +25,32 @@ namespace DDDDemo.api.Controllers
         }
         // GET: api/Shops/
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<DTO.Shop>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(PagingResult<DTO.Shop>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(int? pageIndex = 0, int? pageSize = 3, string nom = null)
         {
-            IEnumerable<Model.Shop> entities = await _context.Shops
-            .Where(shop => nom == null || shop.Name.Contains(nom))
-            .OrderBy(shop => shop.Id)
-            .Skip(pageIndex.Value * pageSize.Value)
-            .Take(pageSize.Value)
-            .ToArrayAsync();
-            return Ok(entities.Select(CreateDTOFromEntity));
+            Task<Model.Shop[]> getShopsTask = _context.Shops
+                .Where(shop => nom == null || shop.Name.Contains(nom))
+                .OrderBy(shop => shop.Id)
+                .Skip(pageIndex.Value * pageSize.Value)
+                .Take(pageSize.Value)
+                .ToArrayAsync();
+
+            Task<int> countShopsTask = _context.Shops.CountAsync(shop => nom == null || shop.Name.Contains(nom));
+
+            await Task.WhenAll(getShopsTask, countShopsTask);
+
+            //IEnumerable<Model.Shop> entities = await
+
+            //int totalCount = await _context.Shops.CountAsync(shop => nom == null || shop.Name.Contains(nom));
+
+            PagingResult<DTO.Shop> resultsPage = new PagingResult<DTO.Shop>()
+            {
+                Items = getShopsTask.Result.Select(CreateDTOFromEntity),
+                PageSize = pageSize.Value,
+                PageIndex = pageIndex.Value,
+                TotalCount = countShopsTask.Result
+            };
+            return Ok(resultsPage);
         }
 
         private static DTO.Shop CreateDTOFromEntity(Model.Shop entity)
