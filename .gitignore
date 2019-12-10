@@ -20,3 +20,6 @@
 /LabAccConc/lib/obj
 /LabAccConc/tests/bin/Debug/netcoreapp3.0
 /LabAccConc/tests/obj
+AspNetCoreIdentityDbFirst/TargetProject/bin
+AspNetCoreIdentityDbFirst/.vs
+AspNetCoreIdentityDbFirst/TargetProject/obj
